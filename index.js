@@ -1,30 +1,34 @@
 'use strict';
 
-var fs = require('fs');
-var extend = require('extend-shallow');
-var ignore = require('parse-gitignore');
-var mm = require('micromatch');
-var cache = {}, ref;
+var lazy = require('lazy-cache')(require);
+var lookup = lazy('look-up');
+var ignore = lazy('parse-gitignore');
+var mm = lazy('micromatch');
+var cwd = process.cwd();
 
-function parseGitignore(fp) {
-  if (cache[fp]) return cache[fp];
-  if (!fs.existsSync(fp)) return [];
-  var str = fs.readFileSync(fp, 'utf8');
-  return (cache[fp] = ignore(str));
-}
+function parseGitignore(opts) {
+  opts = opts || {};
+  var filepath = lookup()('.gitignore', {cwd: cwd});
+  var patterns = ignore()(filepath);
 
-module.exports = function (options) {
-  options = extend({ contains: true }, options);
-  var ignored = parseGitignore('.gitignore');
-  var isMatch = ref || (ref = mm.matcher(ignored.join('|'), options));
+  var isMatch = function (filepath) {
+    return mm().any(patterns, filepath, opts);
+  };
 
-  return function gitignore(file, opts) {
-    opts = extend({}, options, opts);
-    if (opts.gitignore === false) return file;
+  return function gitignore(file) {
+    if (opts.gitignore === false) {
+      return file;
+    }
 
     if (isMatch(file.path)) {
       file.exclude = true;
     }
     return file;
   };
-};
+}
+
+/**
+ * Expose `parseGitignore`
+ */
+
+module.exports = parseGitignore;
