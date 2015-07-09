@@ -1,6 +1,7 @@
 'use strict';
 
 var lazy = require('lazy-cache')(require);
+var extend = lazy('extend-shallow');
 var lookup = lazy('look-up');
 var ignore = lazy('parse-gitignore');
 var mm = lazy('micromatch');
@@ -16,6 +17,8 @@ function parseGitignore(opts) {
   };
 
   return function gitignore(file) {
+    opts = extend()({}, this.options, this.pattern.options, opts);
+
     if (opts.gitignore === false) {
       return file;
     }
