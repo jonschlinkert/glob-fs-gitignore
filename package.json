@@ -1,7 +1,7 @@
 {
   "name": "glob-fs-gitignore",
   "description": "glob-fs middleware for automatically ignoring files specified in `.gitignore`",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/jonschlinkert/glob-fs-gitignore",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/glob-fs-gitignore",
@@ -20,8 +20,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "is-dotdir": "^0.1.0",
-    "is-dotfile": "^1.0.1",
     "lazy-cache": "^0.1.0",
     "look-up": "^0.7.1",
     "micromatch": "jonschlinkert/micromatch#2.2.0",
