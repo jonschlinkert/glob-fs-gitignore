@@ -1,19 +1,18 @@
 'use strict';
 
-var lazy = require('lazy-cache')(require);
-var lookup = lazy('look-up');
-var ignore = lazy('parse-gitignore');
-var mm = lazy('micromatch');
+var findup = require('findup-sync');
+var ignore = require('parse-gitignore');
+var mm = require('micromatch');
 var cwd = process.cwd();
 
 function parseGitignore(opts) {
   opts = opts || {};
 
-  var gitignoreFile = lookup()('.gitignore', {cwd: cwd});
-  var ignorePatterns = ignore()(gitignoreFile);
+  var gitignoreFile = findup('.gitignore', {cwd: cwd});
+  var ignorePatterns = ignore(gitignoreFile);
 
-  var isMatch = function (fp) {
-    return mm().any(fp, ignorePatterns, opts);
+  var isMatch = function(fp) {
+    return mm.any(fp, ignorePatterns, opts);
   };
 
   return function gitignore(file) {
