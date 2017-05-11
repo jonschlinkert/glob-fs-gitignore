@@ -13,7 +13,7 @@ function parseGitignore(opts) {
   var ignorePatterns = ignore()(gitignoreFile);
 
   var isMatch = function (fp) {
-    return mm().any(ignorePatterns, fp, opts);
+    return mm().any(fp, ignorePatterns, opts);
   };
 
   return function gitignore(file) {
