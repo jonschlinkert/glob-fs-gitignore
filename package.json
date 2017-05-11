@@ -4,6 +4,10 @@
   "version": "0.1.5",
   "homepage": "https://github.com/jonschlinkert/glob-fs-gitignore",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Stefan Liebenberg (https://stefanliebenberg.github.io)"
+  ],
   "repository": "jonschlinkert/glob-fs-gitignore",
   "bugs": {
     "url": "https://github.com/jonschlinkert/glob-fs-gitignore/issues"
@@ -14,7 +18,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "scripts": {
     "test": "mocha"
