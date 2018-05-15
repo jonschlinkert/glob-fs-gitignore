@@ -11,7 +11,7 @@ function parseGitignore(opts) {
   var gitignoreFile = findup('.gitignore', {cwd: cwd});
   var gitignorePatterns = ignore(gitignoreFile);
   var ignorePatterns = gitignorePatterns.filter(p => !p.startsWith('!'));
-  var exemptionPatterns = gitignorePatterns.filter(p => p.startsWith('!'));
+  var exemptionPatterns = gitignorePatterns.filter(p => p.startsWith('!')).map(p => p.substr(1));
 
   var isMatch = function(fp) {
     return !mm.any(fp, exemptionPatterns, opts) && mm.any(fp, ignorePatterns, opts);
