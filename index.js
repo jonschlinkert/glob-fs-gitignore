@@ -9,10 +9,18 @@ function parseGitignore(opts) {
   opts = opts || {};
 
   var gitignoreFile = findup('.gitignore', {cwd: cwd});
-  var ignorePatterns = ignore(gitignoreFile);
+  var gitignorePatterns = ignore(gitignoreFile);
+  var ignorePatterns = gitignorePatterns.filter(function(p) {
+    return p.charAt(0) !== '!';
+  });
+  var exemptionPatterns = gitignorePatterns.filter(function(p) {
+    return p.charAt(0) === '!';
+  }).map(function(p) {
+    return p.substr(1);
+  });
 
   var isMatch = function(fp) {
-    return mm.any(fp, ignorePatterns, opts);
+    return !mm.any(fp, exemptionPatterns, opts) && mm.any(fp, ignorePatterns, opts);
   };
 
   return function gitignore(file) {
