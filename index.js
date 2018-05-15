@@ -11,10 +11,10 @@ function parseGitignore(opts) {
   var gitignoreFile = findup('.gitignore', {cwd: cwd});
   var gitignorePatterns = ignore(gitignoreFile);
   var ignorePatterns = gitignorePatterns.filter(function(p) {
-    return !p.startsWith('!');
+    return p.charAt(0) !== '!';
   });
   var exemptionPatterns = gitignorePatterns.filter(function(p) {
-    return p.startsWith('!');
+    return p.charAt(0) === '!';
   }).map(function(p) {
     return p.substr(1);
   });
