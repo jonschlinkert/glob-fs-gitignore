@@ -8,7 +8,7 @@ var cwd = process.cwd();
 function parseGitignore(opts) {
   opts = opts || {};
 
-  var gitignoreFile = findup('.gitignore', {cwd: cwd});
+  var gitignoreFile = findup('.gitignore', {cwd: opts.cwd || cwd});
   var ignorePatterns = ignore(gitignoreFile);
 
   var isMatch = function(fp) {
